@@ -11,6 +11,8 @@
 
 #include <string>
 
+#include <netinet/in.h>
+
 namespace OpenEngine {
 namespace Network {
 
@@ -26,13 +28,29 @@ class TCPSocket {
     
 
 private:
-    int port;
+    string port;
     string host;
+    bool open;
+
+    struct sockaddr_in sa;
+    
+#ifdef _WIN32
+    SOCKET sock;
+#else
+    int sock;
+#endif
+    
 public:
 
     TCPSocket(int port);
     void Connect(string host);
+
+    bool IsOpen() {return open;}
     
+    void Close();
+
+    string ReadLine();
+    void SendLine(string line);
     
 };
 

@@ -79,7 +79,7 @@ namespace Network {
             int err = recv(sock, &buffer, 1, 0);
             if (err < 0) {
                 open = false;
-                break;
+                return "";
             }
             out << buffer;
         } while(buffer != '\n');

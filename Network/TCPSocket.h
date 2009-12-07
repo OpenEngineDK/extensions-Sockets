@@ -30,7 +30,7 @@ class TCPSocket {
 private:
     string port;
     string host;
-    bool open;
+    volatile bool open;
 
     struct sockaddr_in sa;
     

@@ -21,6 +21,7 @@ namespace Network {
     }
 
     void TCPSocket::Close() {
+        shutdown(sock,SHUT_RDWR);
         close(sock);
         open = false;
     }

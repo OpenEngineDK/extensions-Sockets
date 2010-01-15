@@ -1,0 +1,4 @@
+# Distribution file for Sockets
+
+darcs /extensions/Sockets                http://openengine.dk/code/extensions/Sockets
+darcs-dev /extensions/Sockets                fh.daimi.au.dk:/users/cgd/code/extensions/Sockets

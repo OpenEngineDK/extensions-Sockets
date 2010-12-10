@@ -8,6 +8,8 @@
 #ifndef _SOCKETS_TCP_SOCKET_H_
 #define _SOCKETS_TCP_SOCKET_H_
 
+//! @TODO: Add server function or whatever, to let this work as server.
+
 #include <string>
 #ifdef _WIN32
     #include <winsock2.h>

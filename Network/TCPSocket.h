@@ -1,6 +1,3 @@
-#ifndef _SOCKETS_TCP_SOCKET_H_
-#define _SOCKETS_TCP_SOCKET_H_
-// 
 // -------------------------------------------------------------------
 // Copyright (C) 2007 OpenEngine.dk (See AUTHORS) 
 // 
@@ -8,53 +5,54 @@
 // Public License version 2 or any later version. 
 // See the GNU General Public License for more details (see LICENSE). 
 //--------------------------------------------------------------------
+#ifndef _SOCKETS_TCP_SOCKET_H_
+#define _SOCKETS_TCP_SOCKET_H_
 
 #include <string>
-
-#include <netinet/in.h>
+#ifdef _WIN32
+    #include <winsock2.h>
+#else //_WIN32
+    #include <netinet/in.h>
+#endif //_WIN32
 
 namespace OpenEngine {
 namespace Network {
 
-/**
- * Short description.
- *
- * @class TCPSocket TCPSocket.h ons/Sockets/Network/TCPSocket.h
- */
+    /**
+     * Short description.
+     *
+     * @class TCPSocket TCPSocket.h ons/Sockets/Network/TCPSocket.h
+     */
 
-using namespace std;
+    using namespace std;
 
-class TCPSocket {
-    
+    class TCPSocket
+    {
+        private:
+            string host;
+            volatile bool open;
 
-private:
-    string port;
-    string host;
-    volatile bool open;
+        #ifdef _WIN32
+            int port;
+            sockaddr_in sa;
+            SOCKET sock;
+        #else //_WIN32
+            string port;
+            struct sockaddr_in sa;
+            int sock;
+        #endif //_WIN32
 
-    struct sockaddr_in sa;
-    
-#ifdef _WIN32
-    SOCKET sock;
-#else
-    int sock;
-#endif
-    
-public:
+        public:
+            TCPSocket(int port);
+            ~TCPSocket();
 
-    TCPSocket(int port);
-    void Connect(string host);
+            bool Connect(string host);
+            bool IsOpen() {return open;}
+            void Close();
 
-    bool IsOpen() {return open;}
-    
-    void Close();
-
-    string ReadLine();
-    void SendLine(string line);
-    
-};
-
-
+            string ReadLine();
+            void SendLine(string line);
+    };
 } // NS Network
 } // NS OpenEngine
 

@@ -2,3 +2,6 @@
 
 darcs /extensions/Sockets                http://openengine.dk/code/extensions/Sockets
 darcs-dev /extensions/Sockets                fh.daimi.au.dk:/users/cgd/code/extensions/Sockets
+
+#Get windows lib
+win32 /libraries http://www.openengine.dk/data/libraries/winsock2-win32.zip

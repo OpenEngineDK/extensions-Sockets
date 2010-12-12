@@ -1,6 +1,5 @@
 #include "TCPSocket.h"
 
-#include <cstring>
 #include <sys/types.h>
 #ifndef _WIN32
     #include <sys/socket.h>
@@ -38,6 +37,29 @@ namespace Network {
         open = false;
     }
 
+    TCPSocket::TCPSocket(Socket init_sock)
+    {
+    #ifdef _WIN32
+        WSADATA wsaData;
+        int error = WSAStartup(MAKEWORD(2,2), &wsaData);
+        if(error != NO_ERROR)
+        {
+            WSACleanup();
+            logger.error << "Error starting WSA" << logger.end;
+        }
+
+        sock = init_sock;
+        if(sock==INVALID_SOCKET)
+        {
+            WSACleanup();
+            logger.error << "Error creating basic socket" << logger.end;
+        }
+    #else //_WIN32
+        //UNIX
+    #endif //_WIN32
+        open = true;
+    }
+
     TCPSocket::~TCPSocket()
     {
         if(open)
@@ -47,7 +69,6 @@ namespace Network {
     #endif //_WIN32
     }
 
-    //! @TODO: Needs work (windows port)
     void TCPSocket::Close()
     {
     #ifdef _WIN32
@@ -65,7 +86,7 @@ namespace Network {
         #ifdef _WIN32
             LPHOSTENT hostEntry;
             hostEntry = gethostbyname(host.c_str());
-            
+
             sa.sin_family = AF_INET;
             sa.sin_addr = *((LPIN_ADDR)*hostEntry->h_addr_list);
             sa.sin_port = htons(port);
@@ -149,6 +170,5 @@ namespace Network {
         if (err < 0)
             open = false;
     }
-
 }
 }

@@ -5,10 +5,11 @@
 // Public License version 2 or any later version. 
 // See the GNU General Public License for more details (see LICENSE). 
 //--------------------------------------------------------------------
-#ifndef _SOCKETS_TCP_SOCKET_H_
-#define _SOCKETS_TCP_SOCKET_H_
+#ifndef _SOCKETS_TCP_SERVER_SOCKET_H_
+#define _SOCKETS_TCP_SERVER_SOCKET_H_
 
-#include <string>
+#include "TCPSocket.h"
+
 #ifdef _WIN32
     #include <winsock2.h>
     typedef SOCKET Socket;
@@ -17,21 +18,21 @@
     typedef int Socket;
 #endif //_WIN32
 
+
 namespace OpenEngine {
 namespace Network {
 
     /**
      * Short description.
      *
-     * @class TCPSocket TCPSocket.h ons/Sockets/Network/TCPSocket.h
+     * @class TCPServerSocket TCPServerSocket.h ons/Sockets/Network/TCPServerSocket.h
      */
 
     using namespace std;
 
-    class TCPSocket
+    class TCPServerSocket
     {
         private:
-            string host;
             volatile bool open;
 
             struct sockaddr_in sa;
@@ -43,17 +44,14 @@ namespace Network {
         #endif //_WIN32
 
         public:
-            TCPSocket(int port);
-            TCPSocket(Socket init_sock);
-            ~TCPSocket();
+            TCPServerSocket(int port);
+            ~TCPServerSocket();
 
-            bool Connect(string host);
+            bool Listen();
             void Close();
-
+            TCPSocket* Accept();
+    
             bool IsOpen() {return open;}
-            
-            string ReadLine();
-            void SendLine(string line);
     };
 } // NS Network
 } // NS OpenEngine

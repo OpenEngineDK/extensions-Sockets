@@ -20,6 +20,7 @@ namespace Network {
         {
             WSACleanup();
             logger.error << "Error starting WSA" << logger.end;
+            logger.error << "ErrorCode: " << WSAGetLastError() << logger.end;
         }
         
         sock = socket( AF_INET, SOCK_STREAM, IPPROTO_TCP );
@@ -27,6 +28,7 @@ namespace Network {
         {
             WSACleanup();
             logger.error << "Error creating basic socket" << logger.end;
+            logger.error << "ErrorCode: " << WSAGetLastError() << logger.end;
         }
         port = p;
     #else //_WIN32
@@ -46,6 +48,7 @@ namespace Network {
         {
             WSACleanup();
             logger.error << "Error starting WSA" << logger.end;
+            logger.error << "ErrorCode: " << WSAGetLastError() << logger.end;
         }
 
         sock = init_sock;
@@ -53,6 +56,7 @@ namespace Network {
         {
             WSACleanup();
             logger.error << "Error creating basic socket" << logger.end;
+            logger.error << "ErrorCode: " << WSAGetLastError() << logger.end;
         }
     #else //_WIN32
         //UNIX
@@ -95,6 +99,7 @@ namespace Network {
             if(error == SOCKET_ERROR)
             {
                 logger.error << "Error Connecting socket!" << logger.end;
+                logger.error << "ErrorCode: " << WSAGetLastError() << logger.end;
                 return false;
             }
         #else //_WIN32

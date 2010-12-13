@@ -83,7 +83,7 @@ namespace Network {
     #endif
         open = false;
     }
-    
+  
     //! @TODO: UNIX VERSION
     TCPSocket* TCPServerSocket::Accept()
     {
@@ -105,6 +105,5 @@ namespace Network {
             return 0;
         }
     }
-
 }
 }

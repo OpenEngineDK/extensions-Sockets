@@ -9,13 +9,7 @@
 #define _SOCKETS_TCP_SOCKET_H_
 
 #include <string>
-#ifdef _WIN32
-    #include <winsock2.h>
-    typedef SOCKET Socket;
-#else //_WIN32
-    #include <netinet/in.h>
-    typedef int Socket;
-#endif //_WIN32
+#include "TCPTypes.h"
 
 namespace OpenEngine {
 namespace Network {

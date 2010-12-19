@@ -59,6 +59,7 @@ namespace Network {
             logger.error << "ErrorCode: " << WSAGetLastError() << logger.end;
         }
     #else //_WIN32
+        throw NotImplemented("UNIX VERSION OF TCPSocket(Socket init_sock) NotImplemented");
         //UNIX
     #endif //_WIN32
         open = true;
@@ -175,5 +176,4 @@ namespace Network {
         if (err < 0)
             open = false;
     }
-}
-}
+}}

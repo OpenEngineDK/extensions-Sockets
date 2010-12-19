@@ -8,6 +8,8 @@
 
 #include <Logging/Logger.h>
 
+using OpenEngine::Core::NotImplemented;
+
 namespace OpenEngine {
 namespace Network {
 
@@ -67,6 +69,7 @@ namespace Network {
                 return false;
             }
         #else //_WIN32
+            throw NotImplemented("UNIX VERSION OF TCPServerSocket Listen NotImplemented!");
             //OPEN UNIX SERVER SOCKET
         #endif //_WIN32
         open = true;
@@ -95,6 +98,7 @@ namespace Network {
                 int fromlen=sizeof(from);
                 client=accept(sock, (struct sockaddr*)&from, &fromlen);
             #else //_WIN32
+                throw NotImplemented("UNIX VERSION OF TCPServerSocket Accept NotImplemented!");
                 //UNIX LISTEN
             #endif //_WIN32
             return new TCPSocket(client);

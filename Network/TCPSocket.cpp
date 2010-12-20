@@ -157,16 +157,27 @@ namespace Network {
     {
         ostringstream out;
         char buffer;
+        int status=0;
         do
-        {            
-            int err = recv(sock, &buffer, 1, 0);
-            if (err<0)
+        {       
+            int status = recv(sock, &buffer, 1, 0);
+            if (status==0) //Connection Closed
             {
                 open = false;
                 return "";
             }
+            else if (status<0) //Connection Broke
+            {
+                open=false;
+                #ifdef _WIN32
+                    logger.info << "Socket connection failed with ErrorCode:\t" << WSAGetLastError() << logger.end;
+                #else //_WIN32
+                    //! @TODO: Make a unix error message?
+                #endif //_WIN32
+                return "";
+            }
             out << buffer;
-        } while(buffer != '\n');
+        } while(status > 0); // status>0 means we're still recieving data
         return out.str();
     }
 
@@ -174,6 +185,8 @@ namespace Network {
     {
         int err = send(sock, line.c_str(), line.length(), 0);
         if (err < 0)
+        {
             open = false;
+        }
     }
 }}

@@ -8,8 +8,6 @@
 
 #include <Logging/Logger.h>
 
-using OpenEngine::Core::NotImplemented;
-
 namespace OpenEngine {
 namespace Network {
 

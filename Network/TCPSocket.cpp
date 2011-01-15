@@ -11,6 +11,10 @@
 namespace OpenEngine {
     namespace Network {
 
+        TCPSocket::TCPSocket() {
+            open = false;
+        }
+
         TCPSocket::TCPSocket(int p)
         {
 #ifdef _WIN32

@@ -12,34 +12,39 @@
 #include "TCPTypes.h"
 
 namespace OpenEngine {
-namespace Network {
+    namespace Network {
 
-    /**
-     * Short description.
-     *
-     * @class TCPSocket TCPSocket.h ons/Sockets/Network/TCPSocket.h
-     */
+        /**
+         * Short description.
+         *
+         * @class TCPSocket TCPSocket.h ons/Sockets/Network/TCPSocket.h
+         */
 
-    using namespace std;
+        using namespace std;
 
-    class TCPSocket
-    {
+        class TCPSocket
+        {
         private:
             string host;
             volatile bool open;
 
             struct sockaddr_in sa;
             Socket sock;
-        #ifdef _WIN32
+#ifdef _WIN32
             int port;
-        #else //_WIN32
+#else //_WIN32
             string port;
-        #endif //_WIN32
+#endif //_WIN32
+
+
+            TCPSocket();
 
         public:
             TCPSocket(int port);
-            TCPSocket(Socket init_sock);
+            //TCPSocket(Socket init_sock);
             ~TCPSocket();
+
+            static TCPSocket* Steal(Socket s);
 
             bool Connect(string host);
             void Close();
@@ -48,8 +53,8 @@ namespace Network {
             
             string ReadLine();
             void SendLine(string line);
-    };
-} // NS Network
+        };
+    } // NS Network
 } // NS OpenEngine
 
 #endif

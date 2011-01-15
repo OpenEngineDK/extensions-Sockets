@@ -29,11 +29,9 @@ namespace Network {
 
             struct sockaddr_in sa;
             Socket sock;
-        #ifdef _WIN32
+
             int port;
-        #else //_WIN32
-            string port;
-        #endif //_WIN32
+
 
         public:
             TCPServerSocket(int port);

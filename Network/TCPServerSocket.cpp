@@ -30,9 +30,7 @@ namespace Network {
         }
         port = p;
     #else //_WIN32
-        ostringstream out;
-        out << p;
-        port = out.str();
+        port = p;
     #endif //_WIN32       
         open = false;
     }
@@ -67,8 +65,23 @@ namespace Network {
                 return false;
             }
         #else //_WIN32
-            throw NotImplemented("UNIX VERSION OF TCPServerSocket Listen NotImplemented!");
-            //OPEN UNIX SERVER SOCKET
+            sa.sin_family = AF_INET;
+            sa.sin_addr.s_addr = INADDR_ANY;
+            sa.sin_port = htons(port);
+
+            int error = bind(sock, (struct sockaddr*)&sa, sizeof(sa));
+            if(error == -1)
+            {
+                logger.error << "Error Binding socket!" << logger.end;
+                return false;
+            }
+
+            error = listen(sock, 10);
+            if(error)
+            {
+                logger.error << "Error trying to play with socket" << logger.end;
+                return false;
+            }
         #endif //_WIN32
         open = true;
         return true;
@@ -96,10 +109,13 @@ namespace Network {
                 int fromlen=sizeof(from);
                 client=accept(sock, (struct sockaddr*)&from, &fromlen);
             #else //_WIN32
-                throw NotImplemented("UNIX VERSION OF TCPServerSocket Accept NotImplemented!");
+                Socket client;
+                sockaddr_in from;
+                socklen_t fromlen=sizeof(from);
+                client=accept(sock, (struct sockaddr*)&from, &fromlen);
                 //UNIX LISTEN
             #endif //_WIN32
-            return new TCPSocket(client);
+                return TCPSocket::Steal(client);
         }
         else
         {

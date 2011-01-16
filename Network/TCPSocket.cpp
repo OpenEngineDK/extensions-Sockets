@@ -158,14 +158,15 @@ namespace OpenEngine {
             return true;
         }
 
-        string TCPSocket::ReadLine()
+        string TCPSocket::ReadLine(string termination)
         {
             ostringstream out;
             char buffer;
             int status=0;
+            bool useTermChars = (termination.length() > 0);
             do
                 {       
-                    int status = recv(sock, &buffer, 1, 0);
+                    status = recv(sock, &buffer, 1, 0);
                     if (status==0) //Connection Closed
                         {
                             open = false;
@@ -182,6 +183,17 @@ namespace OpenEngine {
                             return "";
                         }
                     out << buffer;
+                    // If termination characters are defined check if received message is terminated.
+                    string recv = out.str();
+                    unsigned int termLen = termination.length();
+                    if( useTermChars && recv.length() >= termLen ){
+                        if( recv.compare(recv.length()-termLen, termLen, termination) == 0 ){
+                            // Message terminated
+                            return out.str();
+                        }
+                    }
+
+
                 } while(status > 0); // status>0 means we're still recieving data
             return out.str();
         }

@@ -51,7 +51,7 @@ namespace OpenEngine {
 
             bool IsOpen() {return open;}
             
-            string ReadLine();
+            string ReadLine(string termination = "");
             void SendLine(string line);
         };
     } // NS Network

@@ -4,6 +4,7 @@
 #ifndef _WIN32
 #include <sys/socket.h>
 #include <netdb.h>
+#include <cstring>
 #endif //_WIN32
 
 #include <Logging/Logger.h>

@@ -1,7 +1,7 @@
 # Distribution file for Sockets
 
-darcs /extensions/Sockets                http://openengine.dk/code/extensions/Sockets
-darcs-dev /extensions/Sockets                fh.daimi.au.dk:/users/cgd/code/extensions/Sockets
+git /extensions/Sockets                https://github.com/OpenEngineDK/extensions-Sockets.git
+git-dev /extensions/Sockets                git@github.com:OpenEngineDK/extensions-Sockets.git
 
 #Get windows lib
 win32 /libraries http://openengine.dk/data/libraries/winsock2-win32.zip
